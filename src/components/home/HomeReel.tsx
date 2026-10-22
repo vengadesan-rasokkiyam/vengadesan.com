@@ -73,8 +73,6 @@ export default function HomeReel() {
           kicker="Reel"
           title="Play reel"
           lede="Scroll through — the clip stays small, then opens to full screen."
-          reveal="up"
-          ledeReveal="fade"
         />
       </div>
       <div

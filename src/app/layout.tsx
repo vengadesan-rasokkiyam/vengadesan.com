@@ -2,7 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Mona_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import Chrome from "@/components/Chrome";
+import KeniDock from "@/components/keni/KeniDock";
+import KeniProvider from "@/components/keni/KeniProvider";
 import JsonLd from "@/components/JsonLd";
+import ScrollMotion from "@/components/ScrollMotion";
 import SmoothScroll from "@/components/SmoothScroll";
 import { profile, site } from "@/lib/content";
 import { copy, person, website } from "@/lib/seo";
@@ -83,6 +86,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-grade="neutral"
+      data-theme="dark"
       className={`${display.variable} ${sans.variable} ${mono.variable} antialiased`}
       suppressHydrationWarning
     >
@@ -94,22 +98,32 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               "if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro')",
           }}
         />
+        <script
+          // Apply saved theme before paint to avoid a dark→light flash.
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('ks:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}",
+          }}
+        />
         {/* before any video loads: an AV1 file that fails to decode falls back to H.264 */}
         <script dangerouslySetInnerHTML={{ __html: AV1_FALLBACK_SCRIPT }} />
       </head>
       <body>
-        <a
-          href="#main"
-          className="sr-only z-[100] rounded-full bg-paper px-4 py-2 text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
-        >
-          Skip to content
-        </a>
-        <Chrome />
-        <SmoothScroll />
-        {children}
-        <div className="grain" aria-hidden />
-        {/* the entity every page refers to by @id */}
-        <JsonLd graph={[website(), person()]} />
+        <KeniProvider>
+          <a
+            href="#main"
+            className="sr-only z-[100] rounded-full bg-paper px-4 py-2 text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+          >
+            Skip to content
+          </a>
+          <Chrome />
+          <SmoothScroll />
+          <ScrollMotion />
+          {children}
+          {/* the entity every page refers to by @id */}
+          <JsonLd graph={[website(), person()]} />
+          <KeniDock />
+        </KeniProvider>
       </body>
     </html>
   );

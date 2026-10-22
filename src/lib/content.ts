@@ -18,6 +18,8 @@ export const site = {
 export const profile = {
   name: "Vengadesan R.",
   first: "Vengadesan",
+  /** Informal name used in conversation */
+  nick: "Vengat",
   location: "Chennai, Tamil Nadu, India",
   timezone: "Asia/Kolkata",
   tzLabel: "IST",
@@ -42,6 +44,74 @@ export const profile = {
   },
 } as const;
 
+/**
+ * /profile — personal identity card only.
+ * Intentionally excludes role story, experience, projects, tools, and certs (those live elsewhere).
+ */
+export const personalDetails = [
+  { label: "Full name", value: "Vengadesan Rasokkiyam" },
+  { label: "Goes by", value: "Vengat" },
+  { label: "Role", value: "Product Designer (UX/UI)" },
+  { label: "Based in", value: "Chennai, Tamil Nadu, India" },
+  { label: "Timezone", value: "Asia/Kolkata (IST)" },
+  { label: "Languages", value: "Tamil · English" },
+  { label: "Work mode", value: "On-site · Hybrid · Remote (IST-friendly)" },
+  { label: "Availability", value: "Open to engagements" },
+] as const;
+
+export const personalChannels = [
+  {
+    id: "email",
+    label: "Email",
+    value: "vengadesan.rasokkiyam@gmail.com",
+    href: "mailto:vengadesan.rasokkiyam@gmail.com",
+  },
+  {
+    id: "phone",
+    label: "Phone",
+    value: "+91 70105 59179",
+    href: "tel:+917010559179",
+  },
+  {
+    id: "whatsapp",
+    label: "WhatsApp",
+    value: "+91 70105 59179",
+    href: "https://wa.me/917010559179",
+  },
+] as const;
+
+/** Designer-facing social / portfolio platforms (only entries with a live URL render). */
+export const designerSocials = [
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    handle: "vengadesanr",
+    href: "https://www.linkedin.com/in/vengadesanr",
+    blurb: "Career, case notes, and product design updates.",
+  },
+  {
+    id: "behance",
+    label: "Behance",
+    handle: "vengadesanr",
+    href: "https://www.behance.net/vengadesanr",
+    blurb: "Visual case studies and presentation decks.",
+  },
+  {
+    id: "dribbble",
+    label: "Dribbble",
+    handle: "vengadesanr",
+    href: "https://dribbble.com/vengadesanr",
+    blurb: "UI shots, brand marks, and interaction peeks.",
+  },
+  {
+    id: "portfolio",
+    label: "Portfolio",
+    handle: "vengadesan.design",
+    href: "https://vengadesan.design",
+    blurb: "This site — selected product experience.",
+  },
+] as const;
+
 /** Two playable classes. CSS grades stay `edit` / `code`. Role identity is one merged designer. */
 export type Grade = "neutral" | "edit" | "code";
 
@@ -61,7 +131,7 @@ export const classes = {
     title: "My Role",
     line: "Who I am, how I work, and the craft behind the work.",
     detail: "Bio, experience, skills, certifications — the full Product Designer (UX/UI) story.",
-    href: "/about",
+    href: "/myrole",
     cta: "Open my role",
     attributes: [
       ["Role", "Product Designer (UX/UI)"],
@@ -377,35 +447,30 @@ export const processSteps = [
     label: "Discover",
     title: "Find the real problem",
     caption: "Stakeholder interviews and user research before any screens — so we design the right outcome.",
-    src: "/work/coldwire-1-discover.webp",
   },
   {
     n: "02",
     label: "Map",
     title: "See the whole journey",
     caption: "Journey maps and information architecture that show the end-to-end experience, not a single screen.",
-    src: "/work/coldwire-2-build-site.webp",
   },
   {
     n: "03",
     label: "Design",
     title: "Shape the system",
     caption: "Wireframes, interaction patterns, and high-fidelity UI in a shared design system teams can ship.",
-    src: "/work/coldwire-3-record-video.webp",
   },
   {
     n: "04",
     label: "Validate",
     title: "Test what matters",
     caption: "Usability tests and heuristics against real workflows — drop-offs get fixed before engineering scales them.",
-    src: "/work/coldwire-4-call.webp",
   },
   {
     n: "05",
     label: "Handoff",
     title: "Ship with clarity",
     caption: "Annotated specs, tokens, and prototypes that shorten QA cycles and keep design intent intact.",
-    src: "/work/coldwire-6-summary.webp",
   },
 ] as const;
 
@@ -522,147 +587,6 @@ export type ProjectCategoryId = (typeof projectCategories)[number]["id"];
 
 export const projects: Project[] = [
   {
-    slug: "freightline",
-    name: "Freightline",
-    tagline: "Enterprise logistics ops console for lane planning and exceptions",
-    body: "Anonymized enterprise SaaS — dispatchers track shipments, exceptions, and SLA risk in one operator console.",
-    stack: ["Figma", "Enterprise SaaS", "Workflow UI", "Design systems"],
-    year: "2024",
-    status: "SaaS · Logistics · NDA",
-    featured: true,
-    nda: true,
-    ndaNote: "Client UI is confidential. Process frames and flows shown; product chrome is anonymized.",
-    proof: [
-      { value: "38%", label: "fewer exception clicks per ticket" },
-      { value: "2.1×", label: "faster lane triage in usability" },
-      { value: "1", label: "shared ops design system" },
-    ],
-    overview:
-      "Freightline is an enterprise logistics operations console — lane board, exception queue, and SLA risk — designed for dispatchers who live in the product all day.",
-    problem:
-      "Ops teams jumped across spreadsheets, legacy screens, and chat threads to clear exceptions. Critical SLA risk stayed invisible until it was late.",
-    approach: [
-      "Mapped the exception lifecycle with dispatch leads before touching UI.",
-      "Collapsed triage into a single queue with severity, owner, and next action.",
-      "Built reusable table, filter, and status patterns into a shared ops system.",
-    ],
-    research: {
-      summary:
-        "Six dispatcher interviews and two shadowing sessions exposed three failure modes: lost context when switching tools, unclear ownership on exceptions, and no early SLA signal.",
-      findings: [
-        "Operators needed severity + owner on every row — not buried in detail drawers.",
-        "Lane planning failed when filters reset between sessions.",
-        "Chat handoffs duplicated work; the console needed an explicit next-action field.",
-      ],
-    },
-    artifacts: [
-      {
-        label: "Discovery board",
-        caption: "Stakeholder map and exception journey before wireframes.",
-        src: "/work/coldwire-1-discover.webp",
-      },
-      {
-        label: "IA · lane board",
-        caption: "Information architecture for lanes, exceptions, and SLA risk.",
-        src: "/work/coldwire-2-build-site.webp",
-      },
-      {
-        label: "Wireframe flow",
-        caption: "Low-fi triage flow — queue → detail → resolve.",
-        src: "/work/coldwire-3-record-video.webp",
-      },
-      {
-        label: "Validation",
-        caption: "Usability notes from dispatcher walkthroughs.",
-        src: "/work/coldwire-4-call.webp",
-      },
-    ],
-    beforeAfter: {
-      before: "Exceptions lived in email + spreadsheets; SLA risk appeared only after missed windows.",
-      after: "One console shows severity, owner, and next action — triage time dropped in moderated tests.",
-    },
-    outcome:
-      "A shippable ops console pattern that cut exception friction and gave leadership a live SLA picture — without rewriting the whole logistics stack.",
-    coverAccent: "#3fd8c9",
-    category: "saas",
-    thumb: "/work/coldwire-2-build-site.webp",
-    caption: "Process frame — logistics ops IA and lane board.",
-    gallery: [
-      "/work/coldwire-1-discover.webp",
-      "/work/coldwire-2-build-site.webp",
-      "/work/coldwire-3-record-video.webp",
-      "/work/coldwire-5-followup.webp",
-    ],
-  },
-  {
-    slug: "claimstack",
-    name: "Claimstack",
-    tagline: "Insurance claims workspace for adjusters and supervisors",
-    body: "Anonymized insurance SaaS — claim intake, evidence checklist, and supervisor review in a guided workflow.",
-    stack: ["Figma", "Enterprise SaaS", "Forms UX", "Accessibility"],
-    year: "2023",
-    status: "SaaS · Insurance · NDA",
-    featured: true,
-    nda: true,
-    ndaNote: "Under NDA. Flows and research shown; branded screens withheld.",
-    proof: [
-      { value: "27%", label: "drop in incomplete submissions" },
-      { value: "4", label: "guided claim stages" },
-      { value: "WCAG", label: "AA targets on core paths" },
-    ],
-    overview:
-      "Claimstack helps insurance adjusters move a claim from intake to supervisor review without losing evidence or status.",
-    problem:
-      "Claims forms sprawled across multi-page wizards. Adjusters skipped required evidence; supervisors spent hours chasing missing files.",
-    approach: [
-      "Rewrote intake as four guided stages with progress and blockers visible.",
-      "Made evidence a checklist tied to claim type — not a free-form upload dump.",
-      "Designed supervisor review around deltas: what changed, what’s missing, what to approve.",
-    ],
-    research: {
-      summary:
-        "Heuristic review of the legacy wizard plus five adjuster interviews. Highest pain: silent validation and no status for waiting evidence.",
-      findings: [
-        "Adjusters needed claim-type templates — one form for all claim types created skip errors.",
-        "Supervisors wanted a diff view, not a full re-read of the claim.",
-        "Mobile tablet use in field required larger tap targets and fewer nested modals.",
-      ],
-    },
-    artifacts: [
-      {
-        label: "Journey map",
-        caption: "Intake → evidence → review → settle.",
-        src: "/work/coldwire-1-discover.webp",
-      },
-      {
-        label: "Stage wireframes",
-        caption: "Four-stage claim structure with blockers.",
-        src: "/work/coldwire-3-record-video.webp",
-      },
-      {
-        label: "Review prototype",
-        caption: "Supervisor delta view for missing evidence.",
-        src: "/work/coldwire-6-summary.webp",
-      },
-    ],
-    beforeAfter: {
-      before: "Long multi-page wizard; incomplete claims bounced late from supervisors.",
-      after: "Guided stages + evidence checklist; incomplete submissions fell in pilot metrics.",
-    },
-    outcome:
-      "A claims workspace that reduced incomplete handoffs and made supervisor review a scan, not a re-investigation.",
-    coverAccent: "#f0a05a",
-    category: "saas",
-    thumb: "/work/coldwire-6-summary.webp",
-    caption: "Process frame — claims review summary pattern.",
-    gallery: [
-      "/work/coldwire-1-discover.webp",
-      "/work/coldwire-3-record-video.webp",
-      "/work/coldwire-4-call.webp",
-      "/work/coldwire-6-summary.webp",
-    ],
-  },
-  {
     slug: "educraft",
     name: "Educraft",
     tagline: "Learning dashboard for courses, progress, and study hours",
@@ -685,27 +609,6 @@ export const projects: Project[] = [
       "Paired KPI cards with course statistics and progress charts for scannable insight.",
       "Grouped calendar, learning hours, and purchased courses so planning and progress sit side by side.",
     ],
-    research: {
-      summary:
-        "Five student guerilla tests on a dense competitor home. Most users failed the “what should I study today?” task within 30 seconds.",
-      findings: [
-        "Greeting + date oriented students faster than a blank metric wall.",
-        "Purchased courses needed progress % on the card, not only in a chart.",
-        "Calendar competed with charts — vertical stacking beat a 3-column mash.",
-      ],
-    },
-    artifacts: [
-      {
-        label: "Wireframe · home",
-        caption: "Early structure for greeting, KPIs, and course list.",
-        src: "/work/educraft.webp",
-      },
-      {
-        label: "Hi-fi dashboard",
-        caption: "Shipped student home with calendar and hours.",
-        src: "/work/educraft-800.webp",
-      },
-    ],
     beforeAfter: {
       before: "Metrics, courses, and calendar competed in one dense fold — next action was unclear.",
       after: "Greeting → KPIs → progress → calendar/courses; students found “what’s next” in moderated tests.",
@@ -714,58 +617,9 @@ export const projects: Project[] = [
       "A structured student home that made courses, hours, and next steps obvious — used as a reference pattern for later SaaS dashboards.",
     coverAccent: "#4f7cff",
     category: "saas",
-    thumb: "/work/educraft.webp",
+    thumb: "/work/educraft.jpg",
     caption: "Laptop showcase — Educraft student dashboard.",
-    gallery: ["/work/educraft.webp", "/work/educraft-800.webp"],
-  },
-  {
-    slug: "cluemate",
-    name: "Cluemate",
-    tagline: "Product intelligence board for insights and decisions",
-    body: "SaaS workspace that turns research clues into prioritized product decisions for PMs and designers.",
-    stack: ["Figma", "SaaS UI", "Information architecture"],
-    year: "2024",
-    status: "SaaS · Product",
-    featured: true,
-    proof: [
-      { value: "1", label: "insight → decision path" },
-      { value: "5", label: "board views shipped" },
-      { value: "−30%", label: "time to find prior research" },
-    ],
-    overview:
-      "Cluemate helps product teams capture clues from research, tag them to themes, and promote decisions without losing the thread.",
-    problem:
-      "Insight docs and Notion boards went stale; teams re-asked the same questions because prior clues were unfindable.",
-    approach: [
-      "Designed a clue card with source, theme, and confidence.",
-      "Linked clues to decisions so evidence stayed attached to the call.",
-      "Added board filters by product area and recency for scan speed.",
-    ],
-    research: {
-      summary: "Interviews with three PMs and two designers who juggled FigJam + Notion + Slack for research memory.",
-      findings: [
-        "People needed “why we decided this” more than another sticky board.",
-        "Confidence tags prevented over-weighting a single anecdote.",
-        "Search had to work on theme + product area, not only free text.",
-      ],
-    },
-    artifacts: [
-      {
-        label: "Product board",
-        caption: "Clue → theme → decision surface.",
-        src: "/work/cluemate.webp",
-      },
-    ],
-    beforeAfter: {
-      before: "Research lived in scattered docs; decisions lost their evidence trail.",
-      after: "One board keeps clues attached to decisions with confidence and source.",
-    },
-    outcome: "A lighter research-ops surface that made prior insight reusable in planning rituals.",
-    coverAccent: "#7c9cff",
-    category: "saas",
-    thumb: "/work/cluemate.webp",
-    caption: "Cluemate — product intelligence board.",
-    gallery: ["/work/cluemate.webp"],
+    gallery: ["/work/educraft.jpg", "/work/educraft-billboard.jpg"],
   },
   {
     slug: "kenso",
@@ -790,13 +644,6 @@ export const projects: Project[] = [
       "Surfaced torque, transmission, cooling, and ABS as glanceable spec chips under the hero.",
       "Used a dark canvas and neon green accents to match the sport-bike energy without cluttering navigation.",
     ],
-    research: {
-      summary: "Competitive scan of five bike brand sites; timed “find price + book” tasks.",
-      findings: [
-        "Price buried below lifestyle carousels killed intent.",
-        "Spec tables were too dense — chips outperformed tables on first view.",
-      ],
-    },
     beforeAfter: {
       before: "Lifestyle-first layout; price and book action required deep scroll.",
       after: "Model, price, specs, and CTAs share the first composition.",
@@ -804,9 +651,9 @@ export const projects: Project[] = [
     outcome: "A product-first landing that sells the model, price, and next action in one composition.",
     coverAccent: "#39ff14",
     category: "web",
-    thumb: "/work/kenso.webp",
+    thumb: "/work/kenso.jpg",
     caption: "iPad mockup — Kenso bike product landing.",
-    gallery: ["/work/kenso.webp", "/work/kenso-800.webp"],
+    gallery: ["/work/kenso.jpg"],
   },
   {
     slug: "fresh-market",
@@ -838,9 +685,9 @@ export const projects: Project[] = [
     outcome: "A warm, green-led mobile flow from browse to buy without extra steps.",
     coverAccent: "#2db84d",
     category: "mobile",
-    thumb: "/work/fresh-market.webp",
+    thumb: "/work/fresh-market.jpg",
     caption: "Dual-phone mockup — grocery home and detail.",
-    gallery: ["/work/fresh-market.webp", "/work/fresh-market-800.webp"],
+    gallery: ["/work/fresh-market.jpg"],
   },
   {
     slug: "job-finder",
@@ -850,7 +697,7 @@ export const projects: Project[] = [
     stack: ["Figma", "Mobile UI", "Marketplace"],
     year: "2024",
     status: "Mobile · Jobs",
-    featured: false,
+    featured: true,
     proof: [
       { value: "3", label: "status filters" },
       { value: "4", label: "job card patterns" },
@@ -865,11 +712,40 @@ export const projects: Project[] = [
       "Highlighted urgently hiring roles without cluttering the scan path.",
     ],
     outcome: "A crisp applied-jobs screen that makes status and shift decisions instant.",
-    coverAccent: "#a78bfa",
+    coverAccent: "#3b82f6",
     category: "mobile",
-    thumb: "/work/job-finder.webp",
+    thumb: "/work/job-finder.jpg",
     caption: "Phone mockup — applied jobs listing.",
-    gallery: ["/work/job-finder.webp", "/work/job-finder-800.webp"],
+    gallery: ["/work/job-finder.jpg"],
+  },
+  {
+    slug: "poster-culture",
+    name: "Poster Culture",
+    tagline: "Poster shop brand — mailer pack and dark storefront",
+    body: "E-commerce brand system for Poster Culture — metallic mailer identity and a dark hero storefront for wall art.",
+    stack: ["Illustrator", "Brand identity", "E-commerce UI"],
+    year: "2024",
+    status: "Brand · Web",
+    featured: true,
+    proof: [
+      { value: "1", label: "mailer lockup" },
+      { value: "1", label: "storefront hero" },
+    ],
+    overview:
+      "Poster Culture is a poster marketplace brand — bold block type on metallic mailers, carried through a dark web storefront with collage hero art.",
+    problem:
+      "Poster shops often look generic online and unbranded in the box, so the unboxing and the site feel like two different brands.",
+    approach: [
+      "Built a high-contrast POSTER / CULTURE lockup for physical mailers.",
+      "Mirrored the energy on a dark storefront with a clear Explore CTA.",
+      "Kept type blocky and loud so the brand reads on purple pack and black web alike.",
+    ],
+    outcome: "A cohesive poster brand from packing slip to first click.",
+    coverAccent: "#e11d48",
+    category: "brand",
+    thumb: "/work/poster-culture.jpg",
+    caption: "Metallic mailer — Poster Culture pack.",
+    gallery: ["/work/poster-culture.jpg", "/work/poster-culture-web.jpg"],
   },
   {
     slug: "portfolio-site",
@@ -879,7 +755,7 @@ export const projects: Project[] = [
     stack: ["Figma", "Landing page", "Personal brand"],
     year: "2024",
     status: "Web · Portfolio",
-    featured: false,
+    featured: true,
     proof: [
       { value: "2", label: "primary CTAs" },
       { value: "1", label: "identity lockup" },
@@ -891,14 +767,43 @@ export const projects: Project[] = [
     approach: [
       "Led with name and a single experience sentence so identity reads in one beat.",
       "Paired View CV and Let’s Talk as equal primary actions.",
-      "Kept social links quiet at the base so the hero stays the focus.",
+      "Extended the AK monogram to physical signage for a complete personal brand.",
     ],
     outcome: "A memorable personal landing that makes the next conversation easy to start.",
-    coverAccent: "#7b5cff",
+    coverAccent: "#3b82f6",
     category: "web",
-    thumb: "/work/portfolio-site.webp",
+    thumb: "/work/portfolio-site.jpg",
     caption: "Laptop mockup — personal brand portfolio.",
-    gallery: ["/work/portfolio-site.webp", "/work/portfolio-site-800.webp"],
+    gallery: ["/work/portfolio-site.jpg", "/work/portfolio-mark.jpg"],
+  },
+  {
+    slug: "pulse-watch",
+    name: "Pulse Watch",
+    tagline: "Fitness watch face — time, rings, and energy at a glance",
+    body: "Wearable UI for an activity watch — clean white face, concentric rings, and a single energy readout.",
+    stack: ["Figma", "Wearable UI", "Motion"],
+    year: "2024",
+    status: "Mobile · Wearable",
+    featured: false,
+    proof: [
+      { value: "3", label: "activity rings" },
+      { value: "1", label: "energy metric" },
+    ],
+    overview:
+      "Pulse Watch is a fitness watch face focused on glanceability — time, date, three activity rings, and an energy count on a bright face.",
+    problem:
+      "Busy watch faces bury today’s progress under complications users never check.",
+    approach: [
+      "Kept time dominant and rings secondary so progress reads in one look.",
+      "Used a white face for outdoor legibility against the orange alpine band.",
+      "Reduced chrome so only energy and rings compete for attention.",
+    ],
+    outcome: "A calm fitness face that makes today’s rings the second thing you see after the time.",
+    coverAccent: "#f97316",
+    category: "mobile",
+    thumb: "/work/pulse-watch.jpg",
+    caption: "Watch mockup — activity rings face.",
+    gallery: ["/work/pulse-watch.jpg"],
   },
   {
     slug: "the-stay",
@@ -925,17 +830,224 @@ export const projects: Project[] = [
     outcome: "A signage-ready identity that says hospitality before you read a word.",
     coverAccent: "#c4a574",
     category: "brand",
-    thumb: "/work/the-stay.webp",
+    thumb: "/work/the-stay.jpg",
     caption: "Lightbox mockup — The Stay brand mark.",
-    gallery: ["/work/the-stay.webp", "/work/the-stay-800.webp"],
+    gallery: ["/work/the-stay.jpg"],
+  },
+  {
+    slug: "jobber",
+    name: "Jobber",
+    tagline: "Jobs brand mark on concrete — figure and tie",
+    body: "Identity for Jobber — a simple figure-and-tie mark on a white paper bag against industrial concrete.",
+    stack: ["Illustrator", "Brand identity", "Packaging"],
+    year: "2024",
+    status: "Brand · Identity",
+    featured: false,
+    proof: [
+      { value: "1", label: "icon lockup" },
+      { value: "1", label: "wordmark" },
+    ],
+    overview:
+      "Jobber is a jobs / hiring brand mark — a purple figure with a white tie cutout, set on tactile packaging in a concrete environment.",
+    problem:
+      "Hiring brands often feel corporate or clip-art; Jobber needed something human and memorable in physical space.",
+    approach: [
+      "Reduced the mark to figure + tie so “work” reads instantly.",
+      "Used soft purple against white paper for approachable contrast.",
+      "Shot the bag in hard light so the brand holds up off-screen.",
+    ],
+    outcome: "A portable hiring identity that feels human on the street, not stuck in a spreadsheet.",
+    coverAccent: "#8b5cf6",
+    category: "brand",
+    thumb: "/work/jobber.jpg",
+    caption: "Paper bag mockup — Jobber mark.",
+    gallery: ["/work/jobber.jpg"],
+  },
+  {
+    slug: "miton",
+    name: "Miton",
+    tagline: "Retail bag identity — Miton The Rich",
+    body: "Bold yellow M lockup for Miton The Rich on a white tote against a saturated orange field.",
+    stack: ["Illustrator", "Brand identity", "Packaging"],
+    year: "2024",
+    status: "Brand · Identity",
+    featured: false,
+    proof: [
+      { value: "1", label: "M monogram" },
+      { value: "1", label: "bag application" },
+    ],
+    overview:
+      "Miton is a retail brand system — a shield-nested M monogram and THE RICH line, proven on a hand-held tote.",
+    problem:
+      "Fashion retail bags need to read from across the street without looking like every other logo tote.",
+    approach: [
+      "Built a geometric M with a nested chevron for a shield feel.",
+      "Locked yellow type on white against orange for maximum walk-by contrast.",
+      "Kept secondary type quiet so the monogram owns the bag.",
+    ],
+    outcome: "A loud, walkable retail mark that owns the sidewalk before the storefront does.",
+    coverAccent: "#f59e0b",
+    category: "brand",
+    thumb: "/work/miton.jpg",
+    caption: "Tote mockup — Miton The Rich.",
+    gallery: ["/work/miton.jpg"],
+  },
+  {
+    slug: "stykker",
+    name: "Stykker",
+    tagline: "Outfits bag brand — tee mark and thumbs-up",
+    body: "Streetwear packaging for Stykker Outfits — gradient tee icon, lightning S, and a playful thumbs-up on a white bag.",
+    stack: ["Illustrator", "Brand identity", "Packaging"],
+    year: "2024",
+    status: "Brand · Identity",
+    featured: false,
+    proof: [
+      { value: "1", label: "tee icon" },
+      { value: "1", label: "bag application" },
+    ],
+    overview:
+      "Stykker Outfits is a streetwear brand mark — orange tee with a lightning S and a cartoon thumbs-up — shown on a suit-held shopping bag.",
+    problem:
+      "Outfit brands need personality in the bag, not just a wordmark that disappears in black.",
+    approach: [
+      "Led with a tee silhouette so the category is obvious before the name.",
+      "Added a thumbs-up arm for attitude without cluttering type.",
+      "Kept the bag white so the gradient icon pops against dark clothing.",
+    ],
+    outcome: "A bag that sells the vibe before the hangtag does.",
+    coverAccent: "#ea580c",
+    category: "brand",
+    thumb: "/work/stykker.jpg",
+    caption: "Shopping bag — Stykker Outfits.",
+    gallery: ["/work/stykker.jpg"],
+  },
+  {
+    slug: "hara",
+    name: "Hara Jewellery",
+    tagline: "2025 New Year print set — gold marquee and deer mark",
+    body: "Seasonal print system for Hara Jewellery — gold 2025 marquee type, deer emblem, and premium planner covers.",
+    stack: ["Illustrator", "Print", "Brand identity"],
+    year: "2024",
+    status: "Brand · Print",
+    featured: false,
+    proof: [
+      { value: "3", label: "cover applications" },
+      { value: "1", label: "seasonal lockup" },
+    ],
+    overview:
+      "Hara Jewellery’s 2025 New Year print set — cream covers, gold bulb numerals, deer brand mark, and Happy New Year script.",
+    problem:
+      "Jewellery brands need seasonal print that feels precious without looking like generic greeting-card stock.",
+    approach: [
+      "Built 2025 as marquee lights for celebration without clutter.",
+      "Kept the deer emblem and teal wordmark consistent across covers.",
+      "Shot the set in a white architectural space so gold reads premium.",
+    ],
+    outcome: "A seasonal print system that feels like the jewellery, not a party flyer.",
+    coverAccent: "#0d9488",
+    category: "brand",
+    thumb: "/work/hara.jpg",
+    caption: "Print mockup — Hara 2025 covers.",
+    gallery: ["/work/hara.jpg"],
+  },
+  {
+    slug: "zenith",
+    name: "Zenith Creative",
+    tagline: "Z mark system — purple-to-teal identity on cards",
+    body: "Brand identity for Zenith Creative Solutions — geometric Z in purple and teal on white and charcoal business cards.",
+    stack: ["Illustrator", "Brand identity", "Stationery"],
+    year: "2024",
+    status: "Brand · Identity",
+    featured: false,
+    proof: [
+      { value: "2", label: "card treatments" },
+      { value: "1", label: "Z monogram" },
+    ],
+    overview:
+      "Zenith Creative Solutions — interlocking purple and teal Z, wordmark, and CREATIVE SOLUTIONS line on dual business cards against concrete.",
+    problem:
+      "Creative agencies need a mark that reads as modern without defaulting to another purple gradient logo.",
+    approach: [
+      "Built a geometric Z from two interlocking shapes for depth.",
+      "Paired full lockup on white with icon-only on charcoal for hierarchy.",
+      "Tested on concrete so color holds against industrial texture.",
+    ],
+    outcome: "A tight identity kit that works full-bleed or icon-only.",
+    coverAccent: "#7c3aed",
+    category: "brand",
+    thumb: "/work/zenith.jpg",
+    caption: "Business cards — Zenith Creative.",
+    gallery: ["/work/zenith.jpg"],
+  },
+  {
+    slug: "agri-go",
+    name: "Agri Go",
+    tagline: "Organic bottle mark — sprout in the A",
+    body: "Packaging identity for Agri Go — navy A with a green sprout, white label, amber bottle on driftwood.",
+    stack: ["Illustrator", "Packaging", "Brand identity"],
+    year: "2024",
+    status: "Brand · Packaging",
+    featured: false,
+    proof: [
+      { value: "1", label: "A + sprout mark" },
+      { value: "1", label: "bottle application" },
+    ],
+    overview:
+      "Agri Go is an organic / agri brand on glass — a capital A with a three-leaf sprout, green wordmark, and natural still-life staging.",
+    problem:
+      "Agri packaging often looks either clinical or overly rustic; Agri Go needed clean and living.",
+    approach: [
+      "Hid a sprout inside the A so growth is the logo, not a sticker.",
+      "Kept the label white and sparse so amber liquid and wood do the warmth.",
+      "Used soft light so glass and leaf green stay honest.",
+    ],
+    outcome: "A bottle that reads organic before you read a word.",
+    coverAccent: "#22c55e",
+    category: "brand",
+    thumb: "/work/agri-go.jpg",
+    caption: "Bottle mockup — Agri Go label.",
+    gallery: ["/work/agri-go.jpg"],
+  },
+  {
+    slug: "flair-fusion",
+    name: "Flair Fusion",
+    tagline: "Dance studio facade — peacock wings and script",
+    body: "Building-scale identity for Flair Fusion Dance Studio & Art Club — dancer silhouette with peacock wings on a modern facade.",
+    stack: ["Illustrator", "Brand identity", "Environmental"],
+    year: "2024",
+    status: "Brand · Environmental",
+    featured: false,
+    proof: [
+      { value: "1", label: "facade lockup" },
+      { value: "1", label: "script + caps pair" },
+    ],
+    overview:
+      "Flair Fusion Dance Studio & Art Club — a dancer with peacock wings and paintbrush, script wordmark, and magenta ampersand on a building exterior.",
+    problem:
+      "Dance studios need environmental graphics that feel alive from the street, not a flat vinyl logo.",
+    approach: [
+      "Combined dancer, wings, and brush so dance + art read as one mark.",
+      "Paired script Flair Fusion with caps subtitle for hierarchy at facade scale.",
+      "Shot upward against blue sky so color and silhouette punch.",
+    ],
+    outcome: "A facade mark that announces the studio before the door does.",
+    coverAccent: "#db2777",
+    category: "brand",
+    thumb: "/work/flair-fusion.jpg",
+    caption: "Building mockup — Flair Fusion mark.",
+    gallery: ["/work/flair-fusion.jpg"],
   },
 ];
 
-export const engineerStats = [
+/** About highlight counts — home `#highlights` + dashboard. */
+export const aboutHighlights = [
   { value: "3.5+", label: "years in product design" },
   { value: "12", label: "enterprise SaaS platforms" },
   { value: "51", label: "business websites" },
+  { value: "6", label: "mobile applications" },
 ] as const;
+
+export const engineerStats = aboutHighlights.slice(0, 3);
 
 export type Role = { title: string; company: string; from: string; to: string; points: string[] };
 
@@ -1111,10 +1223,14 @@ export const quote = "Turning complex domains into intuitive experiences.";
 // ─────────────────────────────────────────────────────────────────── shared
 
 export const nav = [
-  { href: "/about", label: "My Role", grade: "edit" as Grade },
+  { href: "/dashboard", label: "Dashboard", grade: "edit" as Grade },
   { href: "/#both", label: "About Me", grade: "edit" as Grade },
-  { href: "/#experience", label: "Experience", grade: "edit" as Grade },
-  { href: "/work", label: "Projects", grade: "code" as Grade },
+  { href: "/#experience", label: "Experience", grade: "code" as Grade },
+  { href: "/#education", label: "Education", grade: "edit" as Grade },
+  { href: "/#projects", label: "Projects", grade: "code" as Grade },
+  { href: "/myrole", label: "My Role", grade: "edit" as Grade },
+  { href: "/#tools", label: "Stack", grade: "edit" as Grade },
+  { href: "/#learning", label: "Learning", grade: "edit" as Grade },
 ] as const;
 
 export const whatsappLink = (text: string) =>
